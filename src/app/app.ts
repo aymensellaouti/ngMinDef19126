@@ -4,10 +4,11 @@ import { First } from "./components/first/first";
 import { Second } from "./components/second/second";
 import { Color } from "./components/color/color";
 import { Two } from "./components/two/two";
+import { RotatingCard } from "./components/rotating-card/rotating-card";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, First, Second, Color, Two],
+  imports: [RouterOutlet, First, Second, Color, Two, RotatingCard],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
