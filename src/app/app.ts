@@ -3,10 +3,11 @@ import { RouterOutlet } from '@angular/router';
 import { First } from "./components/first/first";
 import { Second } from "./components/second/second";
 import { Color } from "./components/color/color";
+import { Two } from "./components/two/two";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, First, Second, Color],
+  imports: [RouterOutlet, First, Second, Color, Two],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

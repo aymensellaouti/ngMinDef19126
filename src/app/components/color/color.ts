@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-color',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './color.html',
   styleUrl: './color.css',
 })
 export class Color {
-  private defaultColor = 'red';
+  private defaultColor = '#ff0000';
   // état du composant
   color = this.defaultColor;
 
