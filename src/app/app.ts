@@ -13,10 +13,11 @@ import { CvComponent } from "./cv/cv-component/cv-component";
 import { Style } from "./directives/style/style";
 import { MiniWordComponent } from "./directives/mini-word/mini-word.component";
 import { Ampoule } from "./directives/ampoule/ampoule";
+import { CvItem } from "./cv/cv-item/cv-item";
 
 @Component({
   selector: 'app-root',
-  imports: [CvComponent, Style, MiniWordComponent, Ampoule],
+  imports: [CvComponent, Style, MiniWordComponent, Ampoule, CvItem],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
