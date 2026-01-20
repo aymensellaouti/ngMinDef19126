@@ -9,10 +9,11 @@ import { CounterSignal } from "./signals/counter-signal/counter-signal";
 import { SomComponent } from "./signals/som/som.component";
 import { TtcComponent } from "./signals/ttc/ttc.component";
 import { Pere } from "./communicationInterComposant/pere/pere";
+import { CvComponent } from "./cv/cv-component/cv-component";
 
 @Component({
   selector: 'app-root',
-  imports: [ Pere],
+  imports: [CvComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
