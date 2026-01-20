@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { Highlight } from "../highlight";
 
 @Component({
   selector: 'app-ampoule',
-  imports: [],
+  imports: [Highlight],
   templateUrl: './ampoule.html',
   styleUrl: './ampoule.css',
 })
