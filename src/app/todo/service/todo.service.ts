@@ -1,18 +1,18 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Signal, signal, WritableSignal } from "@angular/core";
 import { Todo } from "../model/todo";
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoService {
-
+  #todos = signal<Todo[]>([]);
   /**
    * elle retourne la liste des todos
    *
    * @returns Todo[]
    */
-  getTodos(): Todo[] {
-    return [];
+  getTodos(): Signal<Todo[]> {
+    return this.#todos.asReadonly();
   }
 
   /**
@@ -22,7 +22,7 @@ export class TodoService {
    *
    */
   addTodo(todo: Todo): void {
-
+    this.#todos.update((todos) => [...todos, todo]);
   }
 
   /**
@@ -31,8 +31,10 @@ export class TodoService {
    * @param todo: Todo
    * @returns boolean
    */
-  deleteTodo(todo: Todo): boolean {
-    return false;
+  deleteTodo(todo: Todo): void {
+    this.#todos.update(
+      todos => todos.filter((actualTodo) => actualTodo!=todo)
+    );
   }
 
   /**
@@ -40,5 +42,6 @@ export class TodoService {
    * @returns void
    */
   logTodos() {
+    console.log(this.#todos());
   }
 }
