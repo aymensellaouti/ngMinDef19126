@@ -1,4 +1,13 @@
 <div class="row">
+  <div class="alert alert-warning">
+    {{today | date: 'full' | uppercase}}
+    <p>
+      {{1 | btc2usd | currency}}
+    </p>
+    <p>
+      {{1 | btc2usd:false}}
+    </p>
+  </div>
   <div class="col">
     <app-cv-list (forwardCv)="getSelectedCv($event)" [cvs]="cvs()"/>
   </div>
