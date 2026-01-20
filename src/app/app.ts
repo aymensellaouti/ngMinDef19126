@@ -8,13 +8,17 @@ import { RotatingCard } from "./components/rotating-card/rotating-card";
 import { CounterSignal } from "./signals/counter-signal/counter-signal";
 import { SomComponent } from "./signals/som/som.component";
 import { TtcComponent } from "./signals/ttc/ttc.component";
+import { Pere } from "./communicationInterComposant/pere/pere";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, First, Second, Color, Two, RotatingCard, CounterSignal, SomComponent, TtcComponent],
+  imports: [ Pere],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
+  //state
   protected readonly title = signal('ngMinDef19126');
+
+  // behaviour
 }
