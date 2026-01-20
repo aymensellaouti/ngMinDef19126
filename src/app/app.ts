@@ -14,10 +14,11 @@ import { Style } from "./directives/style/style";
 import { MiniWordComponent } from "./directives/mini-word/mini-word.component";
 import { Ampoule } from "./directives/ampoule/ampoule";
 import { CvItem } from "./cv/cv-item/cv-item";
+import { TodoComponent } from "./todo/todo/todo.component";
 
 @Component({
   selector: 'app-root',
-  imports: [CvComponent, Style, MiniWordComponent, Ampoule, CvItem],
+  imports: [CvComponent, Style, MiniWordComponent, Ampoule, CvItem, TodoComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
