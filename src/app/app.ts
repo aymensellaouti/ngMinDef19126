@@ -12,10 +12,11 @@ import { Pere } from "./communicationInterComposant/pere/pere";
 import { CvComponent } from "./cv/cv-component/cv-component";
 import { Style } from "./directives/style/style";
 import { MiniWordComponent } from "./directives/mini-word/mini-word.component";
+import { Ampoule } from "./directives/ampoule/ampoule";
 
 @Component({
   selector: 'app-root',
-  imports: [CvComponent, Style, MiniWordComponent],
+  imports: [CvComponent, Style, MiniWordComponent, Ampoule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
