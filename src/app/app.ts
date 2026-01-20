@@ -10,10 +10,12 @@ import { SomComponent } from "./signals/som/som.component";
 import { TtcComponent } from "./signals/ttc/ttc.component";
 import { Pere } from "./communicationInterComposant/pere/pere";
 import { CvComponent } from "./cv/cv-component/cv-component";
+import { Style } from "./directives/style/style";
+import { MiniWordComponent } from "./directives/mini-word/mini-word.component";
 
 @Component({
   selector: 'app-root',
-  imports: [CvComponent],
+  imports: [CvComponent, Style, MiniWordComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
