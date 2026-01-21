@@ -1,13 +1,15 @@
 <div class="row">
   <div class="col">
+    <div class="alert alert-danger">
+      Vous avez {{todoService.nbTodos()}} todo(s)
+    </div>
     <ol class="list-group">
       @for (todo of todos(); track $index) {
-
         <li
           class="list-group-item">
           {{todo.name}} : {{todo.content}}
-          <i class="bi bi-trash" ></i>
-    <button class="btn btn-danger" (click)="deleteTodo(todo)">X</button>
+          <i class="bi bi-trash" (click)="deleteTodo(todo)"></i>
+    <!-- <button class="btn btn-danger" (click)="deleteTodo(todo)">X</button> -->
     </li>
       }
     </ol>
@@ -19,6 +21,7 @@
     <button
     (click)="addTodo()"
       class="btn btn-primary m-2"
+      [disabled]="!todo().name || !todo().content"
     >
       add
     </button>

@@ -1,4 +1,4 @@
-import { Injectable, Signal, signal, WritableSignal } from "@angular/core";
+import { computed, Injectable, Signal, signal, WritableSignal } from "@angular/core";
 import { Todo } from "../model/todo";
 
 @Injectable({
@@ -6,6 +6,7 @@ import { Todo } from "../model/todo";
 })
 export class TodoService {
   #todos = signal<Todo[]>([]);
+  nbTodos = computed(() => this.#todos().length)
   /**
    * elle retourne la liste des todos
    *
@@ -23,6 +24,11 @@ export class TodoService {
    */
   addTodo(todo: Todo): void {
     this.#todos.update((todos) => [...todos, todo]);
+    //this.#todos().push(todo);
+    // this.#todos.update((todos) => {
+    //   this.#todos().push(todo);
+    //   return this.#todos();
+    // });
   }
 
   /**
