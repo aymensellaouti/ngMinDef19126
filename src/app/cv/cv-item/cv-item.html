@@ -1,6 +1,9 @@
 
 
 <div (click)="selectCv()">
-  <img src="images/{{cv().path}}" [alt]="cv().name" width="50" height="50" class="rounded-circle">
+  <img src="images/{{cv().path}}" [alt]="cv().name" [style]="{
+    width: size() + 'px',
+    heigth: size() + 'px',
+  }" class="rounded-circle">
   {{cv().firstname}} {{cv().name}}
 </div>

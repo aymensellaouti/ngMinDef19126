@@ -9,7 +9,7 @@ import { Cv } from '../model/cv';
 })
 export class CvItem {
   cv = input.required<Cv>();
-
+  size = input(50);
   selectedCv = output<Cv>();
 
   selectCv() {

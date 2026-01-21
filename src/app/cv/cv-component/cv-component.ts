@@ -8,29 +8,29 @@ import { LoggerService } from '../../services/logger.service';
 import { SayHelloService } from '../../services/sayHello.service';
 import { TodoService } from '../../todo/service/todo.service';
 import { ToastrService } from 'ngx-toastr';
+import { CvService } from '../services/cv.service';
+import { EmbaucheComponent } from "../embauche/embauche.component";
 
 @Component({
   selector: 'app-cv-component',
-  imports: [CvList, CvCard, CurrencyPipe, DatePipe, Btc2usdPipe, UpperCasePipe],
+  imports: [CvList, CvCard, CurrencyPipe, DatePipe, Btc2usdPipe, UpperCasePipe, EmbaucheComponent],
   templateUrl: './cv-component.html',
   styleUrl: './cv-component.css',
 })
 export class CvComponent {
   today = new Date();
+  selectedCv = signal<Cv | null>(null);
   logger = inject(LoggerService);
   //ts = inject(TodoService);
   toastr = inject(ToastrService);
+  cvService = inject(CvService);
 
   sayHelloService = inject(SayHelloService);
-  cvs = signal<Cv[]>([
-    new Cv(1, 'sellaouti', 'aymen', 'teacher', '12324', 'rotating_card_profile3.png', 42),
-    new Cv(2, 'sellaouti', 'skander', 'student', '4444', 'rotating_card_profile2.png', 5),
-  ]);
-  selectedCv = signal<Cv | null>(null);
+  cvs = this.cvService.getCvs();
   constructor() {
     this.logger.log('je suis le cvComponennt');
     this.sayHelloService.hello();
-    this.toastr.info('Bienvenu MD')
+    this.toastr.info('Bienvenu MD');
   }
   getSelectedCv(cv: Cv) {
     this.selectedCv.set(cv);

@@ -1,8 +1,13 @@
+@if (embauchees().length) {
 <div class="alert alert-secondary mt-2">
   Liste des cv pré embauchées:
   <div class="embauchee row">
+    @for ( cv of embauchees() ; track cv.id ) {
     <div class="col-4">
-
+      <app-cv-item [cv]="cv" [size]="150" />
     </div>
+    }
   </div>
 </div>
+
+}
