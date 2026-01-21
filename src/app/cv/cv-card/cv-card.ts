@@ -2,10 +2,12 @@ import { Component, inject, input } from '@angular/core';
 import { Cv } from '../model/cv';
 import { EmbaucheService } from '../services/embauche.service';
 import { ToastrService } from 'ngx-toastr';
+import { DefaultImagePipe } from '../pipes/default-image-pipe';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-cv-card',
-  imports: [],
+  imports: [DefaultImagePipe, RouterLink],
   templateUrl: './cv-card.html',
   styleUrl: './cv-card.css',
 })

@@ -1,3 +1,4 @@
+@if (cv(); as cv) {
 <div class="card-container">
   <div class="card">
     <div class="front">
@@ -5,12 +6,12 @@
         <img src="images/rotating_card_thumb2.png">
       </div>
       <div class="user">
-        <img class="img-circle" src="images/{{cv()?.path}}">
+        <img class="img-circle" src="images/{{cv.path | defaultImage}}">
       </div>
       <div class="content">
         <div class="main">
-          <h3 class="name">{{cv()?.firstname}} {{cv()?.name}}</h3>
-          <p class="profession">{{cv()?.job}}</p>
+          <h3 class="name">{{cv.firstname}} {{cv.name}}</h3>
+          <p class="profession">{{cv.job}}</p>
           <p class="text-center">"I'm the new Sinatra, and since I made it here I can make it anywhere, yeah, they love
             me everywhere"</p>
         </div>
@@ -52,10 +53,14 @@
         </div>
       </div>
       <div class="footer">
-        <button (click)="embaucher()" class="btn btn-primary">
+        <button (click)="embaucher()" class="btn btn-primary m-1">
           embaucher
+        </button>
+        <button [routerLink]="['/cv',cv.id]" class="btn btn-dark m-1">
+          détails
         </button>
       </div>
     </div> <!-- end back panel -->
   </div> <!-- end card -->
 </div>
+}

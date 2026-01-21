@@ -1,14 +1,12 @@
 import {  Injectable, Signal, signal } from '@angular/core';
 import { Cv } from '../model/cv';
 
-
-
 @Injectable({
   providedIn: 'root',
 })
 export class CvService {
   #cvs = signal<Cv[]>([
-    new Cv(1, 'sellaouti', 'aymen', 'teacher', '12324', 'rotating_card_profile3.png', 42),
+    new Cv(1, 'sellaouti', 'aymen', 'teacher', '12324', '', 42),
     new Cv(2, 'sellaouti', 'skander', 'student', '4444', 'rotating_card_profile2.png', 5),
   ]);
 
@@ -29,7 +27,7 @@ export class CvService {
    * @returns Cv | null
    */
   findCvById(id: number): Cv | null {
-    return null;
+    return this.#cvs().find(cv => cv.id == id) ?? null;
   }
 
   /**
@@ -40,7 +38,9 @@ export class CvService {
    * @returns boolean
    */
   deleteCv(cv: Cv): boolean {
-    return false;
+    const length = this.#cvs().length;
+    this.#cvs.update(cvs => cvs.filter(actualCv => cv != actualCv))
+    return length != this.#cvs().length;
   }
 
   /**
@@ -56,7 +56,7 @@ export class CvService {
    *
    * @param cv : le cv sélectionné
    */
-  selectCv(cv: Cv) {
+  selectCv(cv: Cv | null) {
     this.#selectedCv.set(cv);
   }
 }
