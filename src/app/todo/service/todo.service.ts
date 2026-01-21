@@ -1,12 +1,18 @@
-import { computed, Injectable, Signal, signal, WritableSignal } from "@angular/core";
+import { computed, inject, Injectable, Signal, signal, WritableSignal } from "@angular/core";
 import { Todo } from "../model/todo";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { APP_API } from "../../config/app.api";
+import { TodoApi } from "../todo/todo.component";
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoService {
   #todos = signal<Todo[]>([]);
-  nbTodos = computed(() => this.#todos().length)
+  nbTodos = computed(() => this.#todos().length);
+  http = inject(HttpClient);
+
   /**
    * elle retourne la liste des todos
    *
@@ -38,9 +44,7 @@ export class TodoService {
    * @returns boolean
    */
   deleteTodo(todo: Todo): void {
-    this.#todos.update(
-      todos => todos.filter((actualTodo) => actualTodo!=todo)
-    );
+    this.#todos.update((todos) => todos.filter((actualTodo) => actualTodo != todo));
   }
 
   /**
@@ -49,5 +53,9 @@ export class TodoService {
    */
   logTodos() {
     console.log(this.#todos());
+  }
+
+  getTodoApi(): Observable<TodoApi[]> {
+    return this.http.get<TodoApi[]>(APP_API.todo);
   }
 }

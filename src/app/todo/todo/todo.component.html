@@ -28,3 +28,17 @@
   </div>
 </div>
 <!-- <app-cv-component/> -->
+
+<div class="alert alert-warning">
+      <ol class="list-group">
+        @for (todo of todosApi(); track $index) {
+        <li class="list-group-item" [class]="{
+          'list-group-item-success': todo.completed,
+          'list-group-item-danger': !todo.completed,
+        }">
+          {{todo.title}} : {{todo.userId}}
+          <!-- <button class="btn btn-danger" (click)="deleteTodo(todo)">X</button> -->
+        </li>
+        }
+      </ol>
+</div>
