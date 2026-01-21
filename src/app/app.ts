@@ -19,10 +19,11 @@ import { CvCard } from "./cv/cv-card/cv-card";
 import { WeekTodoComponent } from "./todo/week-todo/week-todo.component";
 import { Header } from "./components/header/header";
 import { TestForm } from "./templateDrivenForm/test-form/test-form";
+import { TestObservable } from "./rxjs/test-observable/test-observable";
 
 @Component({
   selector: 'app-root',
-  imports: [CvComponent, Style, MiniWordComponent, Ampoule, CvItem, TodoComponent, CvCard, WeekTodoComponent, RouterOutlet, Header, TestForm],
+  imports: [CvComponent, Style, MiniWordComponent, Ampoule, CvItem, TodoComponent, CvCard, WeekTodoComponent, RouterOutlet, Header, TestForm, TestObservable],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

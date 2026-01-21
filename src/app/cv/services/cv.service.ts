@@ -1,5 +1,6 @@
 import {  Injectable, Signal, signal } from '@angular/core';
 import { Cv } from '../model/cv';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ export class CvService {
   ]);
 
   #selectedCv = signal<Cv | null>(null);
+  selectedCvSubject = new Subject<Cv>();
   /**
    * Retourne la liste des cvs
    * @returns Signal<Cv[]>
@@ -58,5 +60,7 @@ export class CvService {
    */
   selectCv(cv: Cv | null) {
     this.#selectedCv.set(cv);
+    if (cv)
+      this.selectedCvSubject.next(cv);
   }
 }
