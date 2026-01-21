@@ -17,10 +17,11 @@ import { CvItem } from "./cv/cv-item/cv-item";
 import { TodoComponent } from "./todo/todo/todo.component";
 import { CvCard } from "./cv/cv-card/cv-card";
 import { WeekTodoComponent } from "./todo/week-todo/week-todo.component";
+import { Header } from "./components/header/header";
 
 @Component({
   selector: 'app-root',
-  imports: [CvComponent, Style, MiniWordComponent, Ampoule, CvItem, TodoComponent, CvCard, WeekTodoComponent],
+  imports: [CvComponent, Style, MiniWordComponent, Ampoule, CvItem, TodoComponent, CvCard, WeekTodoComponent, RouterOutlet, Header],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
