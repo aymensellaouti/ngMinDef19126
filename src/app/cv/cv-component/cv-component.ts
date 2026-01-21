@@ -19,20 +19,17 @@ import { EmbaucheComponent } from "../embauche/embauche.component";
 })
 export class CvComponent {
   today = new Date();
-  selectedCv = signal<Cv | null>(null);
   logger = inject(LoggerService);
   //ts = inject(TodoService);
   toastr = inject(ToastrService);
   cvService = inject(CvService);
 
+  selectedCv = this.cvService.getSelectedCv();
   sayHelloService = inject(SayHelloService);
   cvs = this.cvService.getCvs();
   constructor() {
     this.logger.log('je suis le cvComponennt');
     this.sayHelloService.hello();
     this.toastr.info('Bienvenu MD');
-  }
-  getSelectedCv(cv: Cv) {
-    this.selectedCv.set(cv);
   }
 }

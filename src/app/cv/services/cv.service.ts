@@ -11,6 +11,8 @@ export class CvService {
     new Cv(1, 'sellaouti', 'aymen', 'teacher', '12324', 'rotating_card_profile3.png', 42),
     new Cv(2, 'sellaouti', 'skander', 'student', '4444', 'rotating_card_profile2.png', 5),
   ]);
+
+  #selectedCv = signal<Cv | null>(null);
   /**
    * Retourne la liste des cvs
    * @returns Signal<Cv[]>
@@ -39,5 +41,22 @@ export class CvService {
    */
   deleteCv(cv: Cv): boolean {
     return false;
+  }
+
+  /**
+   * Retourne le signal représentant le cv séléctionné
+   *
+   * @returns signal<Cv>
+   */
+  getSelectedCv() {
+    return this.#selectedCv.asReadonly();
+  }
+  /**
+   * Permet de sélectionner un cv
+   *
+   * @param cv : le cv sélectionné
+   */
+  selectCv(cv: Cv) {
+    this.#selectedCv.set(cv);
   }
 }

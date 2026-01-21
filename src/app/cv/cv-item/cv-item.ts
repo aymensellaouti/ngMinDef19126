@@ -1,5 +1,6 @@
-import { Component, input, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { Cv } from '../model/cv';
+import { CvService } from '../services/cv.service';
 
 @Component({
   selector: 'app-cv-item',
@@ -10,9 +11,11 @@ import { Cv } from '../model/cv';
 export class CvItem {
   cv = input.required<Cv>();
   size = input(50);
-  selectedCv = output<Cv>();
+  cvService = inject(CvService);
+  // selectedCv = output<Cv>();
 
   selectCv() {
-    this.selectedCv.emit(this.cv());
+    this.cvService.selectCv(this.cv())
+    // this.selectedCv.emit(this.cv());
   }
 }
