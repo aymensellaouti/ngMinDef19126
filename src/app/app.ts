@@ -15,10 +15,12 @@ import { MiniWordComponent } from "./directives/mini-word/mini-word.component";
 import { Ampoule } from "./directives/ampoule/ampoule";
 import { CvItem } from "./cv/cv-item/cv-item";
 import { TodoComponent } from "./todo/todo/todo.component";
+import { CvCard } from "./cv/cv-card/cv-card";
+import { WeekTodoComponent } from "./todo/week-todo/week-todo.component";
 
 @Component({
   selector: 'app-root',
-  imports: [CvComponent, Style, MiniWordComponent, Ampoule, CvItem, TodoComponent],
+  imports: [CvComponent, Style, MiniWordComponent, Ampoule, CvItem, TodoComponent, CvCard, WeekTodoComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
