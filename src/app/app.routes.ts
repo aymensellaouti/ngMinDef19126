@@ -7,6 +7,7 @@ import { TodoComponent } from './todo/todo/todo.component';
 import { Second } from './components/second/second';
 import { CV_ROUTES } from './cv/cv.routes';
 import { NF404 } from './components/nf404/nf404';
+import { Login } from './auth/login/login';
 // /cv
 export const routes: Routes = [
   {path: '', component: First},
@@ -14,6 +15,7 @@ export const routes: Routes = [
   {path: 'color', component: Color},
   {path: 'word', component: MiniWordComponent},
   {path: 'todo', component: TodoComponent},
+  {path: 'login', component: Login},
   {path: ':unParam', component: Second},
   {path: '**', component: NF404}
 ];

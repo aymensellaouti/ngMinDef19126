@@ -18,10 +18,11 @@ import { TodoComponent } from "./todo/todo/todo.component";
 import { CvCard } from "./cv/cv-card/cv-card";
 import { WeekTodoComponent } from "./todo/week-todo/week-todo.component";
 import { Header } from "./components/header/header";
+import { TestForm } from "./templateDrivenForm/test-form/test-form";
 
 @Component({
   selector: 'app-root',
-  imports: [CvComponent, Style, MiniWordComponent, Ampoule, CvItem, TodoComponent, CvCard, WeekTodoComponent, RouterOutlet, Header],
+  imports: [CvComponent, Style, MiniWordComponent, Ampoule, CvItem, TodoComponent, CvCard, WeekTodoComponent, RouterOutlet, Header, TestForm],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
