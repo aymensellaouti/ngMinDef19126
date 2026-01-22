@@ -25,7 +25,9 @@ export class TestObservable {
       }, 1000);
     });
   //  setTimeout(() => {
-      this.myObservable$.subscribe({
+      this.myObservable$
+      // 5 4 3 2 1
+      .subscribe({
         next: (val) => {
           console.log(val);
         },
