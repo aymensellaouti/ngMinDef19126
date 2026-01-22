@@ -6,6 +6,7 @@ import { CvComponent } from "../../cv/cv-component/cv-component";
 import { HttpClient } from "@angular/common/http";
 import { APP_API } from "../../config/app.api";
 import { Observable } from "rxjs";
+import { AsyncPipe } from "@angular/common";
 
 export interface TodoApi {
   userId: number;
@@ -18,7 +19,7 @@ export interface TodoApi {
   selector: 'app-todo',
   templateUrl: './todo.component.html',
   styleUrls: ['./todo.component.css'],
-  imports: [FormsModule],
+  imports: [FormsModule, AsyncPipe],
   providers: [TodoService],
 })
 export class TodoComponent {
@@ -26,12 +27,13 @@ export class TodoComponent {
   todos = this.todoService.getTodos();
   todo = signal<Todo>(new Todo());
   todosApi = signal<TodoApi[]>([]);
+  todos$ = this.todoService.getTodoApi();
   constructor() {
     this.todoService.getTodoApi().subscribe({
       next: (todos) => {
         this.todosApi.set(todos);
-      }
-    })
+      },
+    });
   }
   addTodo() {
     this.todoService.addTodo(this.todo());
@@ -41,6 +43,4 @@ export class TodoComponent {
   deleteTodo(todo: Todo) {
     this.todoService.deleteTodo(todo);
   }
-
-
 }

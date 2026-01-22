@@ -31,7 +31,7 @@
 
 <div class="alert alert-warning">
       <ol class="list-group">
-        @for (todo of todosApi(); track $index) {
+        @for (todo of todos$ | async; track $index) {
         <li class="list-group-item" [class]="{
           'list-group-item-success': todo.completed,
           'list-group-item-danger': !todo.completed,

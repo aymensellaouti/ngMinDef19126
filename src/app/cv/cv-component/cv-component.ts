@@ -26,10 +26,19 @@ export class CvComponent {
 
   selectedCv = this.cvService.getSelectedCv();
   sayHelloService = inject(SayHelloService);
-  cvs = this.cvService.getCvs();
+  cvs = signal<Cv[]>([]);
   constructor() {
     this.logger.log('je suis le cvComponennt');
     this.sayHelloService.hello();
     this.toastr.info('Bienvenu MD');
+    this.cvService.getCvs().subscribe({
+      next: (cvs) => {
+        this.cvs.set(cvs);
+      },
+      error: (e) => {
+        this.cvs.set(this.cvService.getFakeCvs()());
+        this.toastr.error(`Une erreur est survenue les données sont fictives merci de contacter l'admin`)
+      },
+    })
   }
 }

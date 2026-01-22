@@ -1,6 +1,8 @@
-import {  Injectable, Signal, signal } from '@angular/core';
+import {  inject, Injectable, Signal, signal } from '@angular/core';
 import { Cv } from '../model/cv';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { APP_API } from '../../config/app.api';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -12,13 +14,39 @@ export class CvService {
   ]);
 
   #selectedCv = signal<Cv | null>(null);
+  http = inject(HttpClient);
   selectedCvSubject = new Subject<Cv>();
   /**
    * Retourne la liste des cvs
    * @returns Signal<Cv[]>
    */
-  getCvs(): Signal<Cv[]> {
+  getFakeCvs(): Signal<Cv[]> {
     return this.#cvs.asReadonly();
+  }
+  /**
+   * Retourne l'observable de la liste des cvs
+   * @returns Observable<Cv[]>
+   */
+  getCvs(): Observable<Cv[]> {
+    return this.http.get<Cv[]>(APP_API.cv);
+  }
+
+  /**
+   * Retourne l'observable du cv par son id
+   * @param id: l'id du cv recherché
+   * @returns Observable<Cv>
+   */
+  getCvById(id: number): Observable<Cv> {
+    return this.http.get<Cv>(APP_API.cv + id);
+  }
+
+  /**
+   * Permet de supprimer un cv par son id
+   * @param id: l'id du cv à supprimer
+   * @returns Observable<{count: number}>
+   */
+  deleteCvById(id: number): Observable<{ count: number }> {
+    return this.http.delete<{ count: number }>(APP_API.cv + id);
   }
 
   /**
@@ -29,7 +57,7 @@ export class CvService {
    * @returns Cv | null
    */
   findCvById(id: number): Cv | null {
-    return this.#cvs().find(cv => cv.id == id) ?? null;
+    return this.#cvs().find((cv) => cv.id == id) ?? null;
   }
 
   /**
@@ -41,7 +69,7 @@ export class CvService {
    */
   deleteCv(cv: Cv): boolean {
     const length = this.#cvs().length;
-    this.#cvs.update(cvs => cvs.filter(actualCv => cv != actualCv))
+    this.#cvs.update((cvs) => cvs.filter((actualCv) => cv != actualCv));
     return length != this.#cvs().length;
   }
 
@@ -60,7 +88,6 @@ export class CvService {
    */
   selectCv(cv: Cv | null) {
     this.#selectedCv.set(cv);
-    if (cv)
-      this.selectedCvSubject.next(cv);
+    if (cv) this.selectedCvSubject.next(cv);
   }
 }

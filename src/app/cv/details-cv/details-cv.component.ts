@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { CvService } from "../services/cv.service";
 import { APP_ROUTES } from "../../config/app.routes";
 import { DefaultImagePipe } from "../pipes/default-image-pipe";
+import { ToastrService } from "ngx-toastr";
 
 
 
@@ -17,22 +18,29 @@ export class DetailsCvComponent {
   cv = signal<Cv | null>(null);
   acr = inject(ActivatedRoute);
   router = inject(Router);
+  toast = inject(ToastrService);
   cvService = inject(CvService);
   constructor() {
     const id = this.acr.snapshot.params['id'];
-    this.cv.set(this.cvService.findCvById(id));
-    if (!this.cv()) {
-      this.router.navigate([APP_ROUTES.cv]);
-    }
+    this.cvService.getCvById(id).subscribe({
+      next: (cv) => this.cv.set(cv),
+      error: (e) => {
+        this.router.navigate([APP_ROUTES.cv]);
+      }
+    });
   }
   deleteCv() {
     const cv = this.cv();
     if (cv){
-      this.cvService.deleteCv(cv);
-      if (this.cvService.getSelectedCv()() == cv) {
-        this.cvService.selectCv(null);
-      }
-      this.router.navigate([APP_ROUTES.cv]);
+      this.cvService.deleteCvById(cv.id).subscribe({
+        next: (data) => {
+          this.cvService.selectCv(null);
+          this.router.navigate([APP_ROUTES.cv]);
+        },
+        error:(e) => {
+          this.toast.error(`un problème est survenue merci de contacter l'admin`)
+        }
+      });
     }
   }
 }
