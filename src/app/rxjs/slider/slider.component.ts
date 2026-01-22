@@ -1,5 +1,4 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, inject, Input } from '@angular/core';
+import { Component,  Input } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Component({
