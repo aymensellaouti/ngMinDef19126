@@ -11,11 +11,18 @@ import { APP_CONSTANES } from '../../config/constantes';
 })
 export class AuthService {
   http = inject(HttpClient);
+  isAuthenticated(): boolean {
+    return !! localStorage.getItem(APP_CONSTANES.token);
+  }
   login(credentials: Credentials): Observable<LoginResponseDto> {
     return this.http.post<LoginResponseDto>(APP_API.login, credentials).pipe(
       tap(response => {
         localStorage.setItem(APP_CONSTANES.token, response.id);
       })
     );
+  }
+
+  logout() {
+    localStorage.removeItem(APP_CONSTANES.token);
   }
 }
