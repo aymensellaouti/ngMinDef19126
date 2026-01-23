@@ -4,7 +4,7 @@
   class="btn btn-danger">
   show / hide
 </button>
-le message dans le input est : {{inputMessage}}
+le message dans le input est : {{inputMessage}} / {{interval$ | async}}
 <input #myInput (change)="changeMessage(myInput.value)" type="text" class="form-control">
 <app-second/>
 

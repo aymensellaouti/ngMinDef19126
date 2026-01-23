@@ -9,7 +9,13 @@
     </p>
   </div>
   <div class="col">
-    <app-cv-list [cvs]="cvs()"/>
+    @if(cvsResource.isLoading()) {
+      <div class="alert alert-danger">
+        Loading ...
+      </div>
+    } @else {
+      <app-cv-list [cvs]="cvsResource.value()" />
+    }
   </div>
   <div class="col">
     <app-cv-card [cv]="selectedCv()"/>

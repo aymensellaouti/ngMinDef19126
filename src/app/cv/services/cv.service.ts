@@ -2,7 +2,7 @@ import {  inject, Injectable, Signal, signal } from '@angular/core';
 import { Cv } from '../model/cv';
 import { Observable, Subject } from 'rxjs';
 import { APP_API } from '../../config/app.api';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, httpResource } from '@angular/common/http';
 import { APP_CONSTANES } from '../../config/constantes';
 
 @Injectable({
@@ -91,5 +91,24 @@ export class CvService {
   selectCv(cv: Cv | null) {
     this.#selectedCv.set(cv);
     if (cv) this.selectedCvSubject.next(cv);
+  }
+
+  getCvsByName(name: string): Observable<Cv[]> {
+    const params = new HttpParams().set('filter', `{"where":{"name":{"like":"%${name}%"}}}`);
+    return this.http.get<Cv[]>(APP_API.cv, { params });
+  }
+  getCvsByProperty(property: string, value: string): Observable<Cv[]> {
+    const params = new HttpParams().set('filter', `{"where":{"${property}":"${value}"}}`);
+    return this.http.get<Cv[]>(APP_API.cv, { params });
+  }
+  addCv(cv: Cv): Observable<Cv> {
+    if (!cv.path) {
+      cv.path = '';
+    }
+    return this.http.post<Cv>(APP_API.cv, cv);
+  }
+
+  getCvByIdResource(id: Signal<number>) {
+    return httpResource(() => APP_API.cv + id());
   }
 }

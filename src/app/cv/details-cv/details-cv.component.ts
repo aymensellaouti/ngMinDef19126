@@ -6,6 +6,9 @@ import { APP_ROUTES } from "../../config/app.routes";
 import { DefaultImagePipe } from "../pipes/default-image-pipe";
 import { ToastrService } from "ngx-toastr";
 import { AuthService } from "../../auth/services/auth-service";
+import { catchError, EMPTY, tap } from "rxjs";
+import { AsyncPipe } from "@angular/common";
+import { toSignal } from "@angular/core/rxjs-interop";
 
 
 
@@ -13,23 +16,30 @@ import { AuthService } from "../../auth/services/auth-service";
   selector: 'app-details-cv',
   templateUrl: './details-cv.component.html',
   styleUrls: ['./details-cv.component.css'],
-  imports: [DefaultImagePipe],
+  imports: [DefaultImagePipe, AsyncPipe],
 })
 export class DetailsCvComponent {
-  cv = signal<Cv | null>(null);
   acr = inject(ActivatedRoute);
   router = inject(Router);
   toast = inject(ToastrService);
   authService = inject(AuthService);
   cvService = inject(CvService);
+  id = this.acr.snapshot.params['id'];
+  cv$ = this.cvService.getCvById(this.id).pipe(
+    catchError((e) => {
+      this.router.navigate([APP_ROUTES.cv]);
+      return EMPTY;
+    }),
+  );
+  cv = toSignal(this.cv$, {initialValue: null});
   constructor() {
-    const id = this.acr.snapshot.params['id'];
-    this.cvService.getCvById(id).subscribe({
-      next: (cv) => this.cv.set(cv),
-      error: (e) => {
-        this.router.navigate([APP_ROUTES.cv]);
-      },
-    });
+    // const id = this.acr.snapshot.params['id'];
+    // this.cvService.getCvById(id).subscribe({
+    //   next: (cv) => this.cv.set(cv),
+    //   error: (e) => {
+    //     this.router.navigate([APP_ROUTES.cv]);
+    //   },
+    // });
   }
   deleteCv() {
     const cv = this.cv();
