@@ -5,6 +5,8 @@ import { CvService } from "../services/cv.service";
 import { Cv } from "../model/cv";
 import { APP_ROUTES } from "../../config/app.routes";
 import { Router } from "@angular/router";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { uniqCinValidator } from "../../validators/uniqCin.async-validator";
 
 @Component({
   selector: 'app-add-cv',
@@ -27,6 +29,7 @@ export class AddCvComponent implements OnDestroy {
         '',
         {
           validators: [Validators.required, Validators.pattern('[0-9]{8}')],
+          asyncValidators: [uniqCinValidator(this.cvService)],
         },
       ],
       age: [
@@ -48,7 +51,7 @@ export class AddCvComponent implements OnDestroy {
     if (savedForm) {
       this.form.patchValue(JSON.parse(savedForm));
     }
-    this.age.valueChanges.subscribe({
+    this.age.valueChanges.pipe(takeUntilDestroyed()).subscribe({
       next: (age) => {
         if (age < 18) {
           this.path?.disable();
@@ -59,13 +62,16 @@ export class AddCvComponent implements OnDestroy {
   }
 
   addCv() {
-    this.cvService.addCv(this.form.getRawValue() as Cv).subscribe({
-      next: (cv) => {
-        localStorage.removeItem(APP_CONSTANES.savedAddCvForm);
-        this.form.reset();
-        this.router.navigate([APP_ROUTES.cv]);
-      },
-    });
+    this.cvService
+      .addCv(this.form.getRawValue() as Cv)
+      .pipe(takeUntilDestroyed())
+      .subscribe({
+        next: (cv) => {
+          localStorage.removeItem(APP_CONSTANES.savedAddCvForm);
+          this.form.reset();
+          this.router.navigate([APP_ROUTES.cv]);
+        },
+      });
   }
   ngOnDestroy(): void {
     if (this.form.valid) {
