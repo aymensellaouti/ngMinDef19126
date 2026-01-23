@@ -1,14 +1,21 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, OnDestroy } from "@angular/core";
 import { FormBuilder, Validators, AbstractControl, ReactiveFormsModule } from "@angular/forms";
+import { APP_CONSTANES } from "../../config/constantes";
+import { CvService } from "../services/cv.service";
+import { Cv } from "../model/cv";
+import { APP_ROUTES } from "../../config/app.routes";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-add-cv',
   templateUrl: './add-cv.component.html',
   styleUrls: ['./add-cv.component.css'],
-  imports: [ReactiveFormsModule]
+  imports: [ReactiveFormsModule],
 })
-export class AddCvComponent {
+export class AddCvComponent implements OnDestroy {
   formBuilder = inject(FormBuilder);
+  cvService = inject(CvService);
+  router = inject(Router);
 
   form = this.formBuilder.group(
     {
@@ -34,17 +41,36 @@ export class AddCvComponent {
       validators: [],
       asyncValidators: [],
       updateOn: 'change',
-    }
+    },
   );
   constructor() {
+    const savedForm = localStorage.getItem(APP_CONSTANES.savedAddCvForm);
+    if (savedForm) {
+      this.form.patchValue(JSON.parse(savedForm));
+    }
     this.age.valueChanges.subscribe({
-      next: age => {
-        if (age <18) this.path?.disable();
-        else this.path?.enable();
-      }
-    })
+      next: (age) => {
+        if (age < 18) {
+          this.path?.disable();
+          this.path?.setValue('');
+        } else this.path?.enable();
+      },
+    });
   }
+
   addCv() {
+    this.cvService.addCv(this.form.getRawValue() as Cv).subscribe({
+      next: (cv) => {
+        localStorage.removeItem(APP_CONSTANES.savedAddCvForm);
+        this.form.reset();
+        this.router.navigate([APP_ROUTES.cv]);
+      },
+    });
+  }
+  ngOnDestroy(): void {
+    if (this.form.valid) {
+      localStorage.setItem(APP_CONSTANES.savedAddCvForm, JSON?.stringify(this.form.value));
+    }
   }
 
   get name(): AbstractControl {
