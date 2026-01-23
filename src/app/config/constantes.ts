@@ -4,4 +4,5 @@ export const APP_CONSTANES = {
   token: 'Token',
   loginHttpParam: 'access_token',
   loginHttpHeader: 'Authorization',
+  env: 'prod'
 };

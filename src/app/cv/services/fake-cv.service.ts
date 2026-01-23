@@ -1,4 +1,4 @@
-import { Injectable, inject } from "@angular/core";
+import { Injectable, inject, signal } from "@angular/core";
 import { Cv } from "../model/cv";
 import { Observable, of } from "rxjs";
 import { HttpClient, HttpParams } from "@angular/common/http";
@@ -6,19 +6,17 @@ import { APP_API } from "../../config/app.api";
 
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class FakeCvService {
   private http = inject(HttpClient);
 
   private cvs: Cv[] = [];
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
+  #selectedCv = signal<Cv | null>(null);
   constructor() {
     this.cvs = [
-      new Cv(1, "aymen", "sellaouti", "teacher", "as.jpg", "1234", 40),
-      new Cv(2, "skander", "sellaouti", "enfant", "       ", "1234", 4),
+      new Cv(1, 'aymen', 'sellaouti', 'teacher', 'as.jpg', '1234', 40),
+      new Cv(2, 'skander', 'sellaouti', 'enfant', '       ', '1234', 4),
     ];
   }
 
@@ -106,7 +104,7 @@ export class FakeCvService {
    */
   selectByName(name: string) {
     const search = `{"where":{"name":{"like":"%${name}%"}}}`;
-    const params = new HttpParams().set("filter", search);
+    const params = new HttpParams().set('filter', search);
     return this.http.get<any>(APP_API.cv, { params });
   }
   /**
@@ -117,7 +115,15 @@ export class FakeCvService {
    */
   selectByProperty(property: string, value: string) {
     const search = `{"where":{"${property}":"${value}"}}`;
-    const params = new HttpParams().set("filter", search);
+    const params = new HttpParams().set('filter', search);
     return this.http.get<Cv[]>(APP_API.cv, { params });
+  }
+  /**
+   * Retourne le signal représentant le cv séléctionné
+   *
+   * @returns signal<Cv>
+   */
+  getSelectedCv() {
+    return this.#selectedCv.asReadonly();
   }
 }
