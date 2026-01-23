@@ -9,5 +9,9 @@
     >
       <app-cv-item  [cv]="cv"/>
     </li>
+  } @empty {
+    <li class="list-group list-group-item list-group-item-danger">
+      Aucun élément dans la liste
+    </li>
   }
 </ol>

@@ -9,6 +9,7 @@ import { AuthService } from "../../auth/services/auth-service";
 import { catchError, EMPTY, tap } from "rxjs";
 import { AsyncPipe } from "@angular/common";
 import { toSignal } from "@angular/core/rxjs-interop";
+import { AutocompleteComponent } from "../autocomplete/autocomplete.component";
 
 
 
@@ -16,7 +17,7 @@ import { toSignal } from "@angular/core/rxjs-interop";
   selector: 'app-details-cv',
   templateUrl: './details-cv.component.html',
   styleUrls: ['./details-cv.component.css'],
-  imports: [DefaultImagePipe, AsyncPipe],
+  imports: [DefaultImagePipe, AsyncPipe, AutocompleteComponent],
 })
 export class DetailsCvComponent {
   acr = inject(ActivatedRoute);
