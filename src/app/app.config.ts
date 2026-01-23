@@ -11,7 +11,8 @@ import { authInterceptor } from './auth/interceptor/auth-interceptor';
 import { CvService } from './cv/services/cv.service';
 import { APP_CONSTANES } from './config/constantes';
 import { FakeCvService } from './cv/services/fake-cv.service';
-
+import { UUID_TOKEN } from './injectionTokens/uuid.injection-token';
+import {v4 as uuidV4} from 'uuid';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
@@ -19,13 +20,14 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimations(),
     provideToastr(),
-    provideHttpClient(
-      withInterceptors([authInterceptor])
-    ),
+    provideHttpClient(withInterceptors([authInterceptor])),
     {
       provide: CvService,
-      useClass: APP_CONSTANES.env == 'dev' ?
-        FakeCvService: CvService
-    }
+      useClass: APP_CONSTANES.env == 'dev' ? FakeCvService : CvService,
+    },
+    {
+      provide: UUID_TOKEN,
+      useValue: uuidV4,
+    },
   ],
 };

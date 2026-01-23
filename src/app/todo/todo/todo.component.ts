@@ -7,6 +7,7 @@ import { HttpClient } from "@angular/common/http";
 import { APP_API } from "../../config/app.api";
 import { Observable } from "rxjs";
 import { AsyncPipe } from "@angular/common";
+import { UUID_TOKEN } from "../../injectionTokens/uuid.injection-token";
 
 export interface TodoApi {
   userId: number;
@@ -24,6 +25,7 @@ export interface TodoApi {
 })
 export class TodoComponent {
   todoService = inject(TodoService);
+  uuid = inject(UUID_TOKEN);
   todos = this.todoService.getTodos();
   todo = signal<Todo>(new Todo());
   todosApi = signal<TodoApi[]>([]);
@@ -36,6 +38,10 @@ export class TodoComponent {
     });
   }
   addTodo() {
+    this.todo.update((todo) => ({
+      ...todo,
+      id: this.uuid()
+    }));
     this.todoService.addTodo(this.todo());
     this.todo.set(new Todo());
   }
