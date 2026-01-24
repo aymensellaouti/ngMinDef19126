@@ -1,0 +1,8 @@
+<ol class="list-group">
+  @for (user of users; track $index) {
+  <li class="list-group-item">
+    {{user.name}} : {{user.age}} [{{user.age | fibo}}]
+  </li>
+  }
+
+</ol>

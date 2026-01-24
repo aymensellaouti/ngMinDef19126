@@ -7,12 +7,5 @@
     <button class="btn btn-primary" [disabled]="!userFullName" (click)="addUser()">add user</button>
   </div>
 </div>
-<ol class="list-group">
-  @for (user of users; track $index) {
-    <li
-    class="list-group-item">
-    {{user.name}} : {{user.age}} [{{fibo(user.age)}}]
-  </li>
-  }
 
-</ol>
+<app-usert-list-element-component [users]="users" />

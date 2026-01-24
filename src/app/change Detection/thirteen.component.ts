@@ -9,24 +9,25 @@ import {
 } from '@angular/core';
 import { BaseNodeComponent } from './base-node.component';
 import { CounterService } from './services/counter.service';
+import { BehaviorSubject, fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-thirteen',
   standalone: true,
   imports: [AsyncPipe],
   template: `
-    <span (click)="increaseCounter()" class="node-label" [style.background-color]="color"
-      >13 - {{ counterSignal() }}</span
+    <span  class="node-label" [style.background-color]="color"
+      >13 - {{ counterSignal()}}</span
     >
   `,
   styles: ``,
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
 export class ThirteenComponent extends BaseNodeComponent {
   //counter = 0;
-  //counterBs = new BehaviorSubject<number>(0);
-  //counter$ = this.counterBs.asObservable();
+  counterBs = new BehaviorSubject<number>(0);
+  counter$ = this.counterBs.asObservable();
   counterSignal = signal(0);
 
   host = inject(ElementRef);
@@ -37,9 +38,9 @@ export class ThirteenComponent extends BaseNodeComponent {
     // setInterval(() => {
     //   this.counterSignal.update(value => value + 1)
     // }, 1000)
-    // fromEvent(this.host.nativeElement, 'click').subscribe(() => {
-    //   this.increaseCounter();
-    // });
+    fromEvent(this.host.nativeElement, 'click').subscribe(() => {
+      this.increaseCounter();
+    });
   }
 
   increaseCounter() {

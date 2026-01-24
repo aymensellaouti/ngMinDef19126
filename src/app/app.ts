@@ -2,10 +2,11 @@ import { Component, inject, signal } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { Header } from "./components/header/header";
 import { NgxUiLoaderModule, NgxUiLoaderService } from 'ngx-ui-loader';
+import { CdPereComponent } from "./cdOnPushExample/cd-pere/cd-pere.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, NgxUiLoaderModule],
+  imports: [RouterOutlet, Header, NgxUiLoaderModule, CdPereComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
