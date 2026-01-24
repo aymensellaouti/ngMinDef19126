@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { PreloadAllModules, provideRouter, withComponentInputBinding, withPreloading } from '@angular/router';
 
 import { routes } from './app.routes';
 import { LoggerService } from './services/logger.service';
@@ -21,7 +21,11 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withComponentInputBinding()),
+    provideRouter(
+      routes,
+      withComponentInputBinding(),
+      withPreloading(PreloadAllModules)
+    ),
     provideAnimations(),
     provideToastr(),
     importProvidersFrom(NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)),
