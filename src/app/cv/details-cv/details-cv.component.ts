@@ -1,4 +1,4 @@
-import { Component, inject, signal } from "@angular/core";
+import { Component, inject, input, signal } from "@angular/core";
 import { Cv } from "../model/cv";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CvService } from "../services/cv.service";
@@ -17,22 +17,22 @@ import { AutocompleteComponent } from "../autocomplete/autocomplete.component";
   selector: 'app-details-cv',
   templateUrl: './details-cv.component.html',
   styleUrls: ['./details-cv.component.css'],
-  imports: [DefaultImagePipe, AsyncPipe, AutocompleteComponent],
+  imports: [DefaultImagePipe, AutocompleteComponent],
 })
 export class DetailsCvComponent {
-  acr = inject(ActivatedRoute);
-  router = inject(Router);
   toast = inject(ToastrService);
   authService = inject(AuthService);
+  router = inject(Router);
   cvService = inject(CvService);
-  id = this.acr.snapshot.params['id'];
-  cv$ = this.cvService.getCvById(this.id).pipe(
-    catchError((e) => {
-      this.router.navigate([APP_ROUTES.cv]);
-      return EMPTY;
-    }),
-  );
-  cv = toSignal(this.cv$, {initialValue: null});
+
+  // Old version
+  // acr = inject(ActivatedRoute);
+  // cvOldVersion = signal(this.acr.snapshot.data['cv']);
+
+  // khater esta3melna with withComponentInputBinding fel
+  // withComponentInputBinding
+  // elle remplace l'utilisation de activatedRoute et snapshot
+  cv = input.required<Cv>();
   constructor() {
     // const id = this.acr.snapshot.params['id'];
     // this.cvService.getCvById(id).subscribe({
