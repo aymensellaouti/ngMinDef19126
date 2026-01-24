@@ -4,11 +4,21 @@
   <input type="text" class="form-control" formControlName="name" />
   Firstname:
   <input type="text" class="form-control" formControlName="firstname" /> Age:
-  <input type="text" class="form-control" formControlName="age" /> Cin:
+  <input type="text" class="form-control" formControlName="age" />
+  Cin:
   <input type="text" class="form-control" formControlName="cin" />
+  @if (cin.getError('uniqCin')) {
+    <div class="alert alert-danger">
+      {{cin.getError('uniqCin')}}
+    </div>
+  }
   Job: <input type="text" class="form-control" formControlName="job" /> Path:
   <input type="text" class="form-control" formControlName="path" />
-
+  @if (form.getError('ageCin')) {
+  <div class="alert alert-danger">
+    {{form.getError('ageCin')}}
+  </div>
+  }
   <button [disabled]="form.invalid" class="btn btn-primary" (click)="addCv()">
     add cv
   </button>

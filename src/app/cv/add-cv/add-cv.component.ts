@@ -7,6 +7,8 @@ import { APP_ROUTES } from "../../config/app.routes";
 import { Router } from "@angular/router";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { uniqCinValidator } from "../../validators/uniqCin.async-validator";
+import { ageCinValidator } from "../../validators/ageCin.validator";
+import { JsonPipe } from "@angular/common";
 
 @Component({
   selector: 'app-add-cv',
@@ -41,7 +43,7 @@ export class AddCvComponent implements OnDestroy {
       ],
     },
     {
-      validators: [],
+      validators: [ageCinValidator()],
       asyncValidators: [],
       updateOn: 'change',
     },
