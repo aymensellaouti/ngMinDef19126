@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -13,6 +13,10 @@ import { APP_CONSTANES } from './config/constantes';
 import { FakeCvService } from './cv/services/fake-cv.service';
 import { UUID_TOKEN } from './injectionTokens/uuid.injection-token';
 import {v4 as uuidV4} from 'uuid';
+import { NgxUiLoaderModule, NgxUiLoaderConfig } from 'ngx-ui-loader';
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+  // your configuration here
+};
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
@@ -20,6 +24,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withComponentInputBinding()),
     provideAnimations(),
     provideToastr(),
+    importProvidersFrom(NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)),
     provideHttpClient(withInterceptors([authInterceptor])),
     {
       provide: CvService,

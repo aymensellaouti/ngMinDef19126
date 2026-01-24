@@ -1,36 +1,34 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { First } from "./components/first/first";
-import { Second } from "./components/second/second";
-import { Color } from "./components/color/color";
-import { Two } from "./components/two/two";
-import { RotatingCard } from "./components/rotating-card/rotating-card";
-import { CounterSignal } from "./signals/counter-signal/counter-signal";
-import { SomComponent } from "./signals/som/som.component";
-import { TtcComponent } from "./signals/ttc/ttc.component";
-import { Pere } from "./communicationInterComposant/pere/pere";
-import { CvComponent } from "./cv/cv-component/cv-component";
-import { Style } from "./directives/style/style";
-import { MiniWordComponent } from "./directives/mini-word/mini-word.component";
-import { Ampoule } from "./directives/ampoule/ampoule";
-import { CvItem } from "./cv/cv-item/cv-item";
-import { TodoComponent } from "./todo/todo/todo.component";
-import { CvCard } from "./cv/cv-card/cv-card";
-import { WeekTodoComponent } from "./todo/week-todo/week-todo.component";
+import { Component, inject, signal } from '@angular/core';
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { Header } from "./components/header/header";
-import { TestForm } from "./templateDrivenForm/test-form/test-form";
-import { TestObservable } from "./rxjs/test-observable/test-observable";
-import { SliderComponent } from "./rxjs/slider/slider.component";
+import { NgxUiLoaderModule, NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-root',
-  imports: [CvComponent, Style, MiniWordComponent, Ampoule, CvItem, TodoComponent, CvCard, WeekTodoComponent, RouterOutlet, Header, TestForm, TestObservable, SliderComponent],
+  imports: [RouterOutlet, Header, NgxUiLoaderModule],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
   //state
   protected readonly title = signal('ngMinDef19126');
+  ngxService = inject(NgxUiLoaderService);
+  router = inject(Router);
+  constructor() {
+    // this.router.events.subscribe({
+    //   next: (event) => {
+    //     if ( event instanceof NavigationStart) {
+    //       this.ngxService.start();
+    //     }
+    //     if (
+    //       event instanceof NavigationEnd ||
+    //       event instanceof NavigationError ||
+    //       event instanceof NavigationCancel
+    //     ) {
+    //       this.ngxService.stop();
+    //     }
+    //   }
+    // })
+  }
 
-  // behaviour
 }

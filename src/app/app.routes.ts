@@ -16,7 +16,9 @@ export const routes: Routes = [
   ...CV_ROUTES,
   {path: 'color', component: Color},
   {path: 'word', component: MiniWordComponent},
-  {path: 'todo', component: TodoComponent},
+  {path: 'todo', loadComponent: () => import('./todo/todo/todo.component').then(
+    moduleJs => moduleJs.TodoComponent
+  )},
   {path: 'login', component: Login},
   {path: 'cd', component: StartCdComponent},
   {path: 'rh', component: RhComponent},
