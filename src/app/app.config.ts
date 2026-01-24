@@ -14,6 +14,7 @@ import { FakeCvService } from './cv/services/fake-cv.service';
 import { UUID_TOKEN } from './injectionTokens/uuid.injection-token';
 import {v4 as uuidV4} from 'uuid';
 import { NgxUiLoaderModule, NgxUiLoaderConfig } from 'ngx-ui-loader';
+import { CustomPreloadingStrategy } from './preloadingStrategy/custom.preloading-strategy';
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   // your configuration here
 };
@@ -21,11 +22,8 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(
-      routes,
-      withComponentInputBinding(),
-      withPreloading(PreloadAllModules)
-    ),
+    provideRouter(routes, withComponentInputBinding(),
+    withPreloading(CustomPreloadingStrategy)),
     provideAnimations(),
     provideToastr(),
     importProvidersFrom(NgxUiLoaderModule.forRoot(ngxUiLoaderConfig)),
